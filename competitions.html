@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Competitions</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #2e2e2e; /* Dark grey background */
+  color: #e0e0e0; /* Light grey text for readability */
+}
+
+header {
+  background: #111622; /* Darker navy shade for header */
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+nav a {
+  color: #a8caff; /* Light blue for links */
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+table thead tr th:first-child,
+table tbody tr td:first-child {
+  width: 400px;
+  max-width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+
+
+
+th {
+  background: #1f2937; /* Darker grey for table header */
+  color: #f0f0f0;
+  padding: 12px;
+  text-align: center
+}
+
+td {
+  background: #3a3f4b; /* Medium dark grey for table cells */
+  padding: 14px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 12px solid #2e2e2e; /* Matches body bg */
+  color: #ddd;
+}
+
+.comp {
+  display: flex;
+  align-items: center; /* vertically center image and title */
+  gap: 14px;
+  /* remove flex-wrap if you want them on one line */
+  flex-wrap: nowrap;
+}
+
+.title {
+  flex: 1;                 /* take all available horizontal space */
+  text-align: center;      /* center the text horizontally */
+}
+
+
+
+.comp img {
+  width: 400px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #111213; /* Slightly lighter bg behind images */
+  padding: 6px;
+}
+
+.title a {
+  font-weight: bold;
+  font-size: 16px;
+  color: #82aaff; /* Soft bright blue */
+  text-decoration: none;
+}
+
+.title a:hover {
+  text-decoration: underline;
+}
+
+.skills span {
+  display: inline-block;
+  background: #555a66; /* Tags darker */
+  color: #e0e0e0;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  margin: 3px;
+}
+
+@media (max-width: 768px) {
+  table, thead, tbody, th, tr, td {
+    display: block;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    border-radius: 12px;
+    margin-bottom: 15px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Engineer it!</h1>
+  <nav>
+    <a href="ranking.html">Leaderboard</a>
+    <a href="students.html">Challenges</a>
+    <a href="events.html">Events</a>
+    <a href="competitions.html">Competitions</a>
+  </nav>
+</header>
+
+<div class="container">
+  <table>
+    <thead>
+      <tr>
+        <th>Competition</th>
+        <th>Start Date</th>
+        <th>Registration Deadline</th>
+        <th>Skills</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="comp">
+            <a href="https://infomatrix.asia/" target="_blank">
+              <img src="./images/infomatrix.png"
+                  alt="Infomatrix Asia"
+                  onerror="this.src='https://via.placeholder.com/80?text=No+Image'">
+            </a>
+          </div>
+        </td>
+        <td>March 25, 2026</td>
+        <td>February 10, 2026</td>
+        <td class="skills">
+          <span>Robotics</span>
+          <span>Programming</span>
+          <span>AI</span>
+        </td>
+      </tr>
+
+      <!-- ADD MORE COMPETITIONS BELOW -->
+      <tr>
+        <td>
+          <div class="comp">
+            <img src="images/robotics.png" alt="Robotics Challenge">
+            <div class="title">
+              <a href="#" target="_blank">
+                National Robotics Challenge
+              </a>
+            </div>
+          </div>
+        </td>
+        <td>June 5, 2026</td>
+        <td>May 1, 2026</td>
+        <td class="skills">
+          <span>Robotics</span>
+          <span>Electronics</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

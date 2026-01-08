@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Leaderboard</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
+  }
+
+  header {
+    background: #0f172a;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+
+  nav a {
+    color: #fff;
+    margin: 0 12px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .container {
+    max-width: 650px;
+    margin: auto;
+    padding: 20px;
+  }
+
+  ol {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    background: #fff;
+    margin-bottom: 12px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  }
+
+  .rank {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 12px;
+  }
+
+  .gold { background: #facc15; }
+  .silver { background: #e5e7eb; }
+  .bronze { background: #fb923c; }
+
+  .name {
+    flex: 1;
+    font-weight: bold;
+    color: #1e293b;
+    text-decoration: none;
+  }
+
+  .name:hover {
+    text-decoration: underline;
+  }
+
+  .score {
+    font-weight: bold;
+    color: #2563eb;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Engineer it!</h1>
+  <nav>
+    <a href="ranking.html">Leaderboard</a>
+    <a href="students.html">Challenges</a>
+    <a href="events.html">Events</a>
+    <a href="competitions.html">Competitions</a>
+  </nav>
+</header>
+
+<div class="container">
+  <ol id="list"></ol>
+</div>
+
+<script>
+const students = Array.from({ length: 120 }, (_, i) => ({
+  id: i,
+  name: `Student ${i + 1}`,
+  score: Math.ceil(Math.random() * 30)
+}));
+
+// Sort highest → lowest
+students.sort((a, b) => b.score - a.score);
+
+const list = document.getElementById('list');
+
+let html = '';
+
+students.forEach((s, index) => {
+  let rankClass = '';
+  if (index === 0) rankClass = 'gold';
+  else if (index === 1) rankClass = 'silver';
+  else if (index === 2) rankClass = 'bronze';
+
+  html += `
+    <li>
+      <div class="rank ${rankClass}">${index + 1}</div>
+      <a class="name" href="profile.html?id=${s.id}">
+        ${s.name}
+      </a>
+      <div class="score">${s.score} pts</div>
+    </li>
+  `;
+});
+
+list.innerHTML = html;
+</script>
+<script src="data/students.js"></script>
+</body>
+</html>

@@ -1,168 +1,38 @@
+<!-- =========================
+ FILE: index.html (HOME)
+========================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grade 10 Engineering – Student Profiles</title>
+  <title>Engineering</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f6f8;
-      color: #333;
-    }
-    header {
-      background: #0f172a;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0 0 5px 0;
-    }
-    header p {
-      margin: 0;
-      opacity: 0.9;
-    }
-    .container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
-    .filters {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    select {
-      padding: 8px 12px;
-      font-size: 14px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
-    }
-    .card {
-      background: #fff;
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      transition: transform 0.2s ease;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-    }
-    .avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: #e5e7eb;
-      margin: 0 auto 10px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 22px;
-      color: #0f172a;
-    }
-    .name {
-      text-align: center;
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-    .info {
-      font-size: 13px;
-      line-height: 1.5;
-      text-align: center;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 13px;
-      background: #e5e7eb;
-      margin-top: 30px;
-    }
+    body { font-family: Arial; margin:0; background:#f4f6f8; }
+    header { background:#0f172a; color:#fff; padding:20px; text-align:center; }
+    nav a { color:#fff; margin:0 12px; text-decoration:none; font-weight:bold; }
+    .container { max-width:1000px; margin:auto; padding:30px; }
+    .card { background:#fff; padding:20px; border-radius:10px; margin-bottom:20px; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Grade 10 Engineering</h1>
-    <p>Student Profiles – 6 Classes, 120 Students</p>
-  </header>
+<header>
+  <h1>Engineer it!</h1>
+  <nav>
+    <a href="ranking.html">Leaderboard</a>
+    <a href="students.html">Challenges</a>
+    <a href="events.html">Events</a>
+    <a href="competitions.html">Competitions</a>
+  </nav>
+</header>
 
-  <div class="container">
-    <div class="filters">
-      <select id="classFilter">
-        <option value="all">All Classes</option>
-        <option value="A">Class A</option>
-        <option value="B">Class B</option>
-        <option value="C">Class C</option>
-        <option value="D">Class D</option>
-        <option value="E">Class E</option>
-        <option value="F">Class F</option>
-      </select>
-    </div>
-
-    <div class="grid" id="studentGrid"></div>
+<div class="container">
+  <div class="card">
+    <h2>Welcome</h2>
+    <p>This website for my engineering students.</p>
   </div>
-
-  <footer>
-    © Engineering Department – Grade 10
-  </footer>
-
-  <script>
-    const classes = ['A', 'B', 'C', 'D', 'E', 'F'];
-    const interests = [
-      'Robotics', 'Programming', 'Electronics', '3D Modeling',
-      'Mechanical Design', 'AI Basics', 'Arduino', 'Physics Applications'
-    ];
-
-    const students = [];
-
-    classes.forEach(cls => {
-      for (let i = 1; i <= 20; i++) {
-        const id = students.length + 1;
-        students.push({
-          name: `Student ${id}`,
-          class: cls,
-          interest: interests[Math.floor(Math.random() * interests.length)],
-          project: `Engineering Project ${Math.ceil(Math.random() * 5)}`
-        });
-      }
-    });
-
-    const grid = document.getElementById('studentGrid');
-    const filter = document.getElementById('classFilter');
-
-    function render(list) {
-      grid.innerHTML = '';
-      list.forEach(s => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <div class="avatar">${s.name.split(' ')[1]}</div>
-          <div class="name">${s.name}</div>
-          <div class="info">
-            <div><strong>Class:</strong> ${s.class}</div>
-            <div><strong>Interest:</strong> ${s.interest}</div>
-            <div><strong>Project:</strong> ${s.project}</div>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    filter.addEventListener('change', () => {
-      if (filter.value === 'all') {
-        render(students);
-      } else {
-        render(students.filter(s => s.class === filter.value));
-      }
-    });
-
-    render(students);
-  </script>
+</div>
 </body>
 </html>
+
+
+
