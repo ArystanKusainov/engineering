@@ -2,88 +2,183 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Leaderboard</title>
 
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
+/* ===========================
+   GLOBAL
+   =========================== */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
+}
+
+/* ===========================
+   HEADER (UNCHANGED)
+   =========================== */
+header {
+  background: #0f172a;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+nav a {
+  color: #fff;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* ===========================
+   CONTAINER
+   =========================== */
+.leaderboard-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.title {
+  text-align: center;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+/* ===========================
+   SEARCH
+   =========================== */
+.search {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* ===========================
+   TABLE (DESKTOP)
+   =========================== */
+.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0b1220;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.leaderboard thead {
+  background: #111827;
+}
+
+.leaderboard th {
+  padding: 14px;
+  text-align: left;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.leaderboard td {
+  padding: 14px;
+  border-top: 1px solid #1f2937;
+  color: #e5e7eb;
+  font-size: 15px;
+}
+
+.leaderboard tr:hover {
+  background: #111827;
+}
+
+.rank {
+  font-weight: bold;
+  width: 80px;
+}
+
+.rank.gold { color: #facc15; }
+.rank.silver { color: #e5e7eb; }
+.rank.bronze { color: #fb923c; }
+
+.username a {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.username a:hover {
+  text-decoration: underline;
+}
+
+.score {
+  text-align: right;
+  color: #22d3ee;
+  font-weight: bold;
+}
+
+/* ===========================
+   MOBILE VERSION
+   =========================== */
+@media (max-width: 640px) {
+
+  .leaderboard thead {
+    display: none;
   }
 
-  header {
-    background: #0f172a;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+  .leaderboard,
+  .leaderboard tbody,
+  .leaderboard tr,
+  .leaderboard td {
+    display: block;
+    width: 100%;
   }
 
-  nav a {
-    color: #fff;
-    margin: 0 12px;
-    text-decoration: none;
-    font-weight: bold;
+  .leaderboard tr {
+    background: #0b1220;
+    margin-bottom: 14px;
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
   }
 
-  .container {
-    max-width: 650px;
-    margin: auto;
-    padding: 20px;
-  }
-
-  ol {
-    list-style: none;
-    padding: 0;
-  }
-
-  li {
-    background: #fff;
-    margin-bottom: 12px;
-    padding: 14px 16px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  li:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  .leaderboard td {
+    border: none;
+    padding: 6px 0;
   }
 
   .rank {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #e5e7eb;
-    display: flex;
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    margin-right: 12px;
+    border-radius: 50%;
+    background: #1f2937;
+    margin-right: 10px;
   }
 
-  .gold { background: #facc15; }
-  .silver { background: #e5e7eb; }
-  .bronze { background: #fb923c; }
+  .rank.gold { background: #facc15; color: #000; }
+  .rank.silver { background: #e5e7eb; color: #000; }
+  .rank.bronze { background: #fb923c; color: #000; }
 
-  .name {
-    flex: 1;
-    font-weight: bold;
-    color: #1e293b;
-    text-decoration: none;
-  }
-
-  .name:hover {
-    text-decoration: underline;
+  .username {
+    font-size: 16px;
   }
 
   .score {
-    font-weight: bold;
-    color: #2563eb;
+    margin-top: 6px;
+    font-size: 15px;
   }
+}
 </style>
 </head>
 
@@ -99,43 +194,111 @@
   </nav>
 </header>
 
-<div class="container">
-  <ol id="list"></ol>
+<div class="leaderboard-container">
+  <h2 class="title">🏆 Student Scores Leaderboard</h2>
+  <p class="subtitle">Top students of the Engineering Course</p>
+
+  <input
+    type="text"
+    id="search"
+    class="search"
+    placeholder="🔍 Search student..."
+  />
+
+  <table class="leaderboard">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th style="text-align:right">Score</th>
+      </tr>
+    </thead>
+    <tbody id="leaderboard-body"></tbody>
+  </table>
 </div>
 
 <script>
-const students = Array.from({ length: 120 }, (_, i) => ({
-  id: i,
-  name: `Student ${i + 1}`,
-  score: Math.ceil(Math.random() * 30)
-}));
+const SHEET_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQs_aNF-dVdRJkBnX1wyyxKDQgIs7zAD3NY-XLkYuEhewKQNMZoaH_3sSojL0kQujYOmOmbDwdK11tn/pub?gid=0&single=true&output=csv";
 
-// Sort highest → lowest
-students.sort((a, b) => b.score - a.score);
+let students = [];
+const tbody = document.getElementById("leaderboard-body");
+const searchInput = document.getElementById("search");
 
-const list = document.getElementById('list');
+fetch(SHEET_URL)
+  .then(res => {
+    if (!res.ok) throw new Error("Sheet not accessible");
+    return res.text();
+  })
+  .then(csv => {
+    const lines = csv.trim().split(/\r?\n/); 
+    const header = lines.shift().split(",");
 
-let html = '';
+    if (
+      header[0]?.trim() !== "id" ||
+      header[1]?.trim() !== "name" ||
+      header[2]?.trim() !== "score"
+    ) {
+      throw new Error("CSV header mismatch");
+    }
 
-students.forEach((s, index) => {
-  let rankClass = '';
-  if (index === 0) rankClass = 'gold';
-  else if (index === 1) rankClass = 'silver';
-  else if (index === 2) rankClass = 'bronze';
+    students = lines.map(line => {
+      const parts = line.split(",");
+      return {
+        id: parts[0].trim(),
+        name: parts[1].trim(),
+        score: Number(parts[2].trim()) || 0
+      };
+    });
 
-  html += `
-    <li>
-      <div class="rank ${rankClass}">${index + 1}</div>
-      <a class="name" href="profile.html?id=${s.id}">
-        ${s.name}
-      </a>
-      <div class="score">${s.score} pts</div>
-    </li>
-  `;
+    render(students);
+  })
+  .catch(err => {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="3" style="color:red; text-align:center; padding:20px;">
+          ⚠ Failed to load leaderboard data
+        </td>
+      </tr>
+    `;
+    console.error(err);
+  });
+
+function render(data) {
+  tbody.innerHTML = "";
+
+  data
+    .sort((a, b) => b.score - a.score)
+    .forEach((s, index) => {
+      let rankClass = "";
+      if (index === 0) rankClass = "gold";
+      else if (index === 1) rankClass = "silver";
+      else if (index === 2) rankClass = "bronze";
+
+      tbody.innerHTML += `
+        <tr>
+          <td class="rank ${rankClass}">#${index + 1}</td>
+          <td class="username">
+            <a href="profile.html?id=${s.id}">
+              ${s.name}
+            </a>
+          </td>
+          <td class="score">${s.score} pts</td>
+        </tr>
+      `;
+    });
+}
+
+searchInput.addEventListener("input", e => {
+  const value = e.target.value.toLowerCase().trim();
+  render(
+    students.filter(s =>
+      s.name.toLowerCase().includes(value)
+    )
+  );
 });
-
-list.innerHTML = html;
 </script>
-<script src="data/students.js"></script>
+
+
 </body>
 </html>

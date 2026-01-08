@@ -2,138 +2,94 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Competitions</title>
 
 <style>
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #2e2e2e; /* Dark grey background */
-  color: #e0e0e0; /* Light grey text for readability */
+  background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
 }
 
 header {
-  background: #111622; /* Darker navy shade for header */
+  background: #0f172a;
   color: #fff;
   padding: 20px;
   text-align: center;
 }
 
 nav a {
-  color: #a8caff; /* Light blue for links */
+  color: #fff;
   margin: 0 12px;
   text-decoration: none;
   font-weight: bold;
 }
 
-nav a:hover {
-  text-decoration: underline;
-}
-
-.container {
+.competitions-container {
   max-width: 1000px;
-  margin: auto;
-  padding: 20px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-table thead tr th:first-child,
-table tbody tr td:first-child {
-  width: 400px;
-  max-width: 400px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  vertical-align: middle;
-}
-
-
-
-
-th {
-  background: #1f2937; /* Darker grey for table header */
-  color: #f0f0f0;
-  padding: 12px;
-  text-align: center
-}
-
-td {
-  background: #3a3f4b; /* Medium dark grey for table cells */
-  padding: 14px;
-  text-align: center;
-  vertical-align: middle;
-  border-bottom: 12px solid #2e2e2e; /* Matches body bg */
-  color: #ddd;
-}
-
-.comp {
-  display: flex;
-  align-items: center; /* vertically center image and title */
-  gap: 14px;
-  /* remove flex-wrap if you want them on one line */
-  flex-wrap: nowrap;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 .title {
-  flex: 1;                 /* take all available horizontal space */
-  text-align: center;      /* center the text horizontally */
+  text-align: center;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.competitions {
+  width: 100%;
+  border-collapse: collapse;
+  background: #152a53;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.competitions th, .competitions td {
+  padding: 12px;
+  text-align: center;
+  color: #e5e7eb;
+  vertical-align: middle;
+}
+
+.competitions thead {
+  background: #1f428d;
 }
 
 
 
-.comp img {
-  width: 400px;
-  height: 80px;
-  object-fit: contain;
-  border-radius: 10px;
-  background: #111213; /* Slightly lighter bg behind images */
-  padding: 6px;
-}
-
-.title a {
+.comp-name a {
+  color: #22d3ee;
   font-weight: bold;
-  font-size: 16px;
-  color: #82aaff; /* Soft bright blue */
   text-decoration: none;
 }
 
-.title a:hover {
+.comp-name a:hover {
   text-decoration: underline;
+}
+
+.comp-name div {
+  justify-content: center;
 }
 
 .skills span {
   display: inline-block;
-  background: #555a66; /* Tags darker */
+  background: #555a66;
   color: #e0e0e0;
   padding: 4px 8px;
   border-radius: 999px;
   font-size: 12px;
-  margin: 3px;
+  margin: 2px;
 }
-
-@media (max-width: 768px) {
-  table, thead, tbody, th, tr, td {
-    display: block;
-  }
-
-  th {
-    display: none;
-  }
-
-  td {
-    border-radius: 12px;
-    margin-bottom: 15px;
-  }
-}
-
 </style>
 </head>
-
 <body>
 
 <header>
@@ -146,59 +102,86 @@ td {
   </nav>
 </header>
 
-<div class="container">
-  <table>
+<div class="competitions-container">
+  <h2 class="title">🏆 Competitions</h2>
+  <p class="subtitle">List of upcoming competitions</p>
+
+  <table class="competitions">
     <thead>
       <tr>
+        <th>#</th>
         <th>Competition</th>
         <th>Start Date</th>
         <th>Registration Deadline</th>
         <th>Skills</th>
       </tr>
     </thead>
-
-    <tbody>
+    <tbody id="competitions-body">
       <tr>
-        <td>
-          <div class="comp">
-            <a href="https://infomatrix.asia/" target="_blank">
-              <img src="./images/infomatrix.png"
-                  alt="Infomatrix Asia"
-                  onerror="this.src='https://via.placeholder.com/80?text=No+Image'">
-            </a>
-          </div>
-        </td>
-        <td>March 25, 2026</td>
-        <td>February 10, 2026</td>
-        <td class="skills">
-          <span>Robotics</span>
-          <span>Programming</span>
-          <span>AI</span>
-        </td>
-      </tr>
-
-      <!-- ADD MORE COMPETITIONS BELOW -->
-      <tr>
-        <td>
-          <div class="comp">
-            <img src="images/robotics.png" alt="Robotics Challenge">
-            <div class="title">
-              <a href="#" target="_blank">
-                National Robotics Challenge
-              </a>
-            </div>
-          </div>
-        </td>
-        <td>June 5, 2026</td>
-        <td>May 1, 2026</td>
-        <td class="skills">
-          <span>Robotics</span>
-          <span>Electronics</span>
+        <td colspan="5" style="text-align:center; padding:20px; color:#f00;">
+          Loading competitions...
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<script>
+// Google Sheet CSV URL
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQs_aNF-dVdRJkBnX1wyyxKDQgIs7zAD3NY-XLkYuEhewKQNMZoaH_3sSojL0kQujYOmOmbDwdK11tn/pub?gid=1648332792&single=true&output=csv";
+
+const tbody = document.getElementById("competitions-body");
+
+// Parse CSV into objects
+function parseCSV(csv) {
+  const lines = csv.trim().split(/\r?\n/);
+  const header = lines.shift().split(",").map(h => h.trim());
+  return lines.map(line => {
+    const values = line.split(",").map(v => v.trim());
+    let obj = {};
+    header.forEach((h, i) => obj[h] = values[i] || "");
+    return obj;
+  });
+}
+
+// Render table
+function render(data) {
+  tbody.innerHTML = "";
+  data.forEach((comp, i) => {
+    const skills = comp["Skills"]?.split(";").map(s => `<span>${s.trim()}</span>`).join(" ") || "";
+    const link = comp["Link"] || "#";
+
+    tbody.innerHTML += `
+      <tr>
+        <td>${i + 1}</td>
+        <td class="comp-name">
+          <div style="display:flex; align-items:center;">
+              <a href="${link}" target="_blank">${comp["Competition"]}</a>
+          </div>
+        </td>
+        <td>${comp["Start Date"]}</td>
+        <td>${comp["Registration Deadline"]}</td>
+        <td class="skills">${skills}</td>
+      </tr>
+    `;
+  });
+}
+
+// Fetch CSV
+fetch(SHEET_URL)
+  .then(res => {
+    if (!res.ok) throw new Error("Sheet not accessible");
+    return res.text();
+  })
+  .then(csv => {
+    const competitions = parseCSV(csv);
+    render(competitions);
+  })
+  .catch(err => {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:red;">⚠ Failed to load competitions</td></tr>`;
+    console.error(err);
+  });
+</script>
 
 </body>
 </html>
