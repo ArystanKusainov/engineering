@@ -48,31 +48,54 @@
 
   .bar {
     background:#e5e7eb;
-    height:8px;
+    height:12px;
     border-radius:6px;
     margin-top:6px;
     overflow:hidden;
+    position:relative;
   }
 
   .fill {
-    background:#2563eb;
+    background:#10b981; /* green */
     height:100%;
     border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-weight:bold;
+    font-size:12px;
+    white-space:nowrap;
+    text-shadow:0 1px 0 rgba(0,0,0,0.35);
+  }
+
+  .fill .percent {
+    padding:0 6px;
   }
 
   .badges {
     margin-top:12px;
   }
-
-  .badge {
-    display:inline-block;
-    background:#facc15;
-    padding:4px 10px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:bold;
-    margin:4px;
+  .achievements {
+    text-align:left;
+    margin-top:16px;
   }
+  .achievements h3 {
+    margin:0 0 8px 0;
+    font-size:16px;
+    color:#0f172a;
+  }
+  .achievements ul { list-style: none; padding:0; margin:0; }
+  .achievements li { background:#eef2ff; margin:6px 0; padding:8px 10px; border-radius:8px; color:#0f172a; }
+  .certificates {
+    text-align:left;
+    margin-top:12px;
+  }
+  .certificates h3 { margin:0 0 8px 0; font-size:16px; color:#0f172a; }
+  .certificates ul { list-style:none; padding:0; margin:0; }
+  .certificates li { margin:6px 0; padding:8px 10px; border-radius:8px; background:#f1fdf7; }
+  .certificates a { color:#065f46; font-weight:600; text-decoration:none; }
+  .certificates small { display:inline-block; margin-left:8px; color:#065f46; opacity:0.8; font-size:12px; }
 </style>
 </head>
 
@@ -92,34 +115,52 @@ const student = students.find(s => s.id == id);
 if (!student) {
   document.getElementById("profile").innerHTML = "Student not found";
 } else {
-  const total = student.robotics + student.programming + student.electronics;
-
-  const badgesHTML = student.badges
-    ? student.badges.map(b => `<span class="badge">${b}</span>`).join("")
-    : "";
+  const total = student.robotics + student.programming + student.electronics + (student["3dmodeling"]||0) + (student.arduino||0);
 
   document.getElementById("profile").innerHTML = `
     <img src="${student.photo}" alt="${student.name}">
     <h2>${student.name}</h2>
 
     <div class="skill">
-      Robotics: ${student.robotics}/10
-      <div class="bar"><div class="fill" style="width:${student.robotics * 10}%"></div></div>
+      Robotics
+      <div class="bar"><div class="fill" style="width:${student.robotics * 10}%"><span class="percent">${student.robotics*10}%</span></div></div>
     </div>
 
     <div class="skill">
-      Programming: ${student.programming}/10
-      <div class="bar"><div class="fill" style="width:${student.programming * 10}%"></div></div>
+      Programming
+      <div class="bar"><div class="fill" style="width:${student.programming * 10}%"><span class="percent">${student.programming*10}%</span></div></div>
     </div>
 
     <div class="skill">
-      Electronics: ${student.electronics}/10
-      <div class="bar"><div class="fill" style="width:${student.electronics * 10}%"></div></div>
+      Electronics
+      <div class="bar"><div class="fill" style="width:${student.electronics * 10}%"><span class="percent">${student.electronics*10}%</span></div></div>
+    </div>
+
+    <div class="skill">
+      3D Modeling
+      <div class="bar"><div class="fill" style="width:${(student["3dmodeling"]||0) * 10}%"><span class="percent">${(student["3dmodeling"]||0)*10}%</span></div></div>
+    </div>
+
+    <div class="skill">
+      Arduino
+      <div class="bar"><div class="fill" style="width:${(student.arduino||0) * 10}%"><span class="percent">${(student.arduino||0)*10}%</span></div></div>
     </div>
 
     <div class="total">Total Score: ${total}</div>
 
-    <div class="badges">${badgesHTML}</div>
+    <div class="achievements">
+      <h3>Achievements</h3>
+      <ul>
+        ${student.achievements && student.achievements.length ? student.achievements.map(a => `<li>${a}</li>`).join('') : '<li>No achievements yet</li>'}
+      </ul>
+    </div>
+
+    <div class="certificates">
+      <h3>Certificates</h3>
+      <ul>
+        ${student.certificates && student.certificates.length ? student.certificates.map(c => `<li><a href="${c.url}" target="_blank">${c.title}</a>${c.date?` <small>${c.date}</small>`:''}</li>`).join('') : '<li>No certificates yet</li>'}
+      </ul>
+    </div>
   `;
 }
 </script>

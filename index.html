@@ -7,16 +7,36 @@
   <meta charset="UTF-8" />
   <title>Engineering</title>
   <style>
-    body { font-family: Arial; margin:0; background:#f4f6f8; }
-    header { background:#0f172a; color:#fff; padding:20px; text-align:center; }
+    body { font-family: Arial; margin:0; background:transparent; }
+    .site-title a {
+    color: #fff;
+    text-decoration: none;
+    }
+
+    .site-title a:hover {
+      text-decoration: underline;
+    }
+    /* Background video wrapper */
+    .video-bg { position:fixed; top:50%; left:50%; width:100vw; height:100vh; overflow:hidden; z-index:-1; pointer-events:none; transform:translate(-50%, -50%); }
+    .video-bg iframe { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); min-width:100%; min-height:100%; width:auto; height:auto; }
+
+    /* Page content sits above video */
+    .content { position:relative; z-index:1; }
+    header { background:#0f172a; color:#fff; padding:20px; text-align:center; position:relative; z-index:2; }
     nav a { color:#fff; margin:0 12px; text-decoration:none; font-weight:bold; }
     .container { max-width:1000px; margin:auto; padding:30px; }
     .card { background:#fff; padding:20px; border-radius:10px; margin-bottom:20px; }
   </style>
 </head>
 <body>
+  <div class="video-bg">
+    <iframe src="https://www.youtube.com/embed/c_V1iD6F1kk?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=c_V1iD6F1kk&iv_load_policy=3"
+            frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
 <header>
-  <h1>Engineer it!</h1>
+  <h1 class="site-title">
+  <a href="index.html">Engineer it!</a>
+  </h1>
   <nav>
     <a href="ranking.html">Leaderboard</a>
     <a href="students.html">Challenges</a>
@@ -25,10 +45,12 @@
   </nav>
 </header>
 
-<div class="container">
-  <div class="card">
-    <h2>Welcome</h2>
-    <p>This website for my engineering students.</p>
+<div class="content">
+  <div class="container">
+    <div class="card">
+      <h2>Welcome</h2>
+      <p>This website for my engineering students.</p>
+    </div>
   </div>
 </div>
 </body>
