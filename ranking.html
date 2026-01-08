@@ -47,7 +47,7 @@ nav a {
   margin-bottom: 6px;
 }
 
-.subtitle {
+.subtitle, .updated {
   text-align: center;
   color: #64748b;
   margin-bottom: 20px;
@@ -197,7 +197,7 @@ nav a {
 <div class="leaderboard-container">
   <h2 class="title">🏆 Student Scores Leaderboard</h2>
   <p class="subtitle">Top students of the Engineering Course</p>
-
+  <p class="updated">Last updated: </p>
   <input
     type="text"
     id="search"
@@ -224,14 +224,57 @@ const SHEET_URL =
 let students = [];
 const tbody = document.getElementById("leaderboard-body");
 const searchInput = document.getElementById("search");
+const updatedEl = document.querySelector('.updated');
+
+function refreshUpdated() {
+  fetch(SHEET_URL, { cache: 'no-cache' })
+    .then(res => {
+      if (!res.ok) throw new Error('Sheet not accessible');
+      const lastMod = res.headers.get('Last-Modified');
+      return res.text().then(csv => ({ csv, lastMod }));
+    })
+    .then(({ csv, lastMod }) => {
+      const lines = csv.trim().split(/\r?\n/);
+      const header = lines.shift().split(',');
+
+      let updatedText = null;
+      if (lastMod) {
+        const d = new Date(lastMod);
+        if (!isNaN(d)) updatedText = d.toLocaleString();
+      }
+
+      if (!updatedText) {
+        const updatedIdx = header.findIndex(h => /updated/i.test((h||'').trim()));
+        if (updatedIdx >= 0 && lines.length > 0) {
+          const firstParts = lines[0].split(',');
+          const raw = (firstParts[updatedIdx] || '').trim();
+          if (raw) {
+            const d2 = new Date(raw);
+            updatedText = isNaN(d2) ? raw : d2.toLocaleString();
+          }
+        }
+      }
+
+      if (!updatedText) updatedText = new Date().toLocaleString();
+      if (updatedEl) updatedEl.textContent = 'Last updated: ' + updatedText;
+    })
+    .catch(err => {
+      console.error('Failed to refresh updated time', err);
+    });
+}
+
+// Refresh immediately and then every 5 minutes
+refreshUpdated();
+setInterval(refreshUpdated, 5 * 60 * 1000);
 
 fetch(SHEET_URL)
   .then(res => {
     if (!res.ok) throw new Error("Sheet not accessible");
-    return res.text();
+    const lastMod = res.headers.get('Last-Modified');
+    return res.text().then(csv => ({ csv, lastMod }));
   })
-  .then(csv => {
-    const lines = csv.trim().split(/\r?\n/); 
+  .then(({ csv, lastMod }) => {
+    const lines = csv.trim().split(/\r?\n/);
     const header = lines.shift().split(",");
 
     if (
@@ -241,6 +284,28 @@ fetch(SHEET_URL)
     ) {
       throw new Error("CSV header mismatch");
     }
+
+    // Determine updated time: prefer Last-Modified header, then an `updated` CSV column, else fallback to now
+    let updatedText = null;
+    if (lastMod) {
+      const d = new Date(lastMod);
+      if (!isNaN(d)) updatedText = d.toLocaleString();
+    }
+
+    if (!updatedText) {
+      const updatedIdx = header.findIndex(h => /updated/i.test((h||"").trim()));
+      if (updatedIdx >= 0 && lines.length > 0) {
+        const firstParts = lines[0].split(",");
+        const raw = (firstParts[updatedIdx] || "").trim();
+        if (raw) {
+          const d2 = new Date(raw);
+          updatedText = isNaN(d2) ? raw : d2.toLocaleString();
+        }
+      }
+    }
+
+    if (!updatedText) updatedText = new Date().toLocaleString();
+    if (updatedEl) updatedEl.textContent = 'Last updated: ' + updatedText;
 
     students = lines.map(line => {
       const parts = line.split(",");
